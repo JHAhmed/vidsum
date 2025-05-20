@@ -1,5 +1,5 @@
 <script>
-  import { Tabs, Switch, Input } from "$components";
+  import { Tabs, Switch } from "$components";
   import { onMount } from "svelte";
   import { marked } from "marked";
   import { Toaster, toast } from "svelte-sonner";
@@ -22,6 +22,11 @@
   let isLoading = $state(false);
   let errorMessage = $state("");
 
+
+
+  $effect(() => {
+    console.log("The summaryLength changed to:", summaryLength);
+  });
 
   function handleKeydown(event) {
     if (event.key === 'Enter') {
@@ -148,9 +153,19 @@
     <p class="text-lg text-slate-600 dark:text-slate-400">Paste a YouTube link, get a summary!</p>
   </header>
   <form onsubmit={handleSubmit} class="space-y-6">
-    
-    <Input bind:value={youtubeUrl} label="YouTube Video URL" placeholder="e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
+    <div>
+      <label for="youtube-url" class="mb-1.5 block text-xs md:text-sm font-medium text-gray-700 dark:text-gray-300"
+        >YouTube Video URL</label>
+      <input
+        type="url"
+        autocomplete="off"
 
+        id="youtube-url"
+        bind:value={youtubeUrl}
+        placeholder="e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        class="w-full rounded-lg border-gray-300 bg-gray-50 px-4 py-3 text-sm md:text-base text-gray-900 outline-none focus:border-sky-500 focus:ring focus:ring-sky-500 dark:border-slate-700 dark:bg-slate-800 dark:text-gray-100 dark:placeholder-slate-500 dark:focus:border-sky-500 dark:focus:ring-sky-500"
+        required />
+    </div>
     <div class="my-6 md:space-y-0 space-y-4 flex w-full flex-col sm:flex-row sm:space-x-2 md:space-x-4">
       <div class="w-full">
         <Tabs
@@ -176,9 +191,19 @@
           }} />
       </div>
     </div>
-    
-    <Input bind:value={point} label="Points To Include" onkeydown={handleKeydown} required={false} placeholder="e.g., jdk, javac, difference between java and python" />
+    <div class="w-full">
+      <label for="points-input" class="mb-1.5 block text-xs md:text-sm font-medium text-gray-700 dark:text-gray-300"
+        >Points To Include</label>
+      <input
 
+        onkeydown={(event) => handleKeydown(event)}
+        id="points-input"
+        type="text"
+        autocomplete="off"
+        placeholder="e.g., jdk, javac, difference between java and python"
+        bind:value={point}
+        class="w-full rounded-lg border-gray-300 bg-gray-50 text-sm md:text-base px-4 py-3 text-gray-900 outline-none focus:border-sky-500 focus:ring focus:ring-sky-500 dark:border-slate-700 dark:bg-slate-800 dark:text-gray-100 dark:placeholder-slate-500 dark:focus:border-sky-500 dark:focus:ring-sky-500" />
+    </div>
     {#if pointsList.length > 0}
       <div class="mt-2 flex flex-wrap items-center gap-2">
         {#each pointsList as point, i}
@@ -192,9 +217,16 @@
         {/each}
       </div>
     {/if}
-
-    <Input bind:value={title} label="Note Title" placeholder="e.g., Java Week 1 Insights" autocomplete="on" type="text" />
-
+    <div class="w-full">
+      <label for="title-input" class="mb-1.5 block text-xs md:text-sm font-medium text-gray-700 dark:text-gray-300"
+        >Note Title</label>
+      <input
+        id="title-input"
+        type="text"
+        placeholder="e.g., Java Week 1 Insights"
+        bind:value={title}
+        class="w-full rounded-lg border-gray-300 bg-gray-50 text-sm md:text-base px-4 py-3 text-gray-900 outline-none focus:border-sky-500 focus:ring focus:ring-sky-500 dark:border-slate-700 dark:bg-slate-800 dark:text-gray-100 dark:placeholder-slate-500 dark:focus:border-sky-500 dark:focus:ring-sky-500" />
+    </div>
     <button
       type="submit"
       disabled={isLoading}

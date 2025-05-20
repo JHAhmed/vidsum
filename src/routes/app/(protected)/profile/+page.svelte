@@ -21,24 +21,24 @@
 <svelte:head>
   <title>Profile | VidSum</title>
   <meta name="description" content="View and edit your profile information." />
-  <link rel="canonical" href="https://vidsum.vercel.app/app/profile" />
+  <link rel="canonical" href="https://vidsum-one.vercel.app/app/profile" />
   <script type="application/ld+json">
     {
       "@context": "http://schema.org",
       "@type": "WebPage",
       "name": "Profile | VidSum",
-      "url": "https://vidsum.vercel.app/app/profile"
+      "url": "https://vidsum-one.vercel.app/app/profile"
     }
   </script>
 
   <meta property="og:title" content="Profile | VidSum" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://vidsum.vercel.app/ogimage.png" />
+  <meta property="og:image" content="https://vidsum-one.vercel.app/ogimage.png" />
   <meta property="og:image:alt" content="VidSum - Summarize videos using AI" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:url" content="https://vidsum.vercel.app/app/profile" />
+  <meta property="og:url" content="https://vidsum-one.vercel.app/app/profile" />
 
   <meta property="og:description" content="View and edit your profile information." />
 </svelte:head>

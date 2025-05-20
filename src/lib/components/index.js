@@ -4,4 +4,4 @@ export { default as Tabs } from './ui/Tabs.svelte';
 export { default as Switch } from './ui/Switch.svelte';
 
 export { default as Note } from './Note.svelte';
-export { default as Settings } from './Settings.svelte';
+export { default as Input } from './Input.svelte';

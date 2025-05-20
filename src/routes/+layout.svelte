@@ -55,10 +55,10 @@
     property="og:description"
     content="Summarize videos using AI. Paste a YouTube URL and get a summary in seconds." />
   <meta property="og:type" content="website" />
-  <!-- <meta property="og:image" content="https://vidsum.vercel.app/ogimage.png" /> -->
-  <!-- <meta property="og:url" content="https://vidsum.vercel.app" /> -->
+  <!-- <meta property="og:image" content="https://vidsum-one.vercel.app/ogimage.png" /> -->
+  <!-- <meta property="og:url" content="https://vidsum-one.vercel.app" /> -->
 
-  <!-- <link rel="canonical" href="https://vidsum.vercel.app" /> -->
+  <!-- <link rel="canonical" href="https://vidsum-one.vercel.app" /> -->
 </svelte:head>
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
