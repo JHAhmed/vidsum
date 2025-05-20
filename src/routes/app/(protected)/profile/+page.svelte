@@ -1,32 +1,46 @@
 <script>
+  import { goto } from "$app/navigation";
   import Icon from "@iconify/svelte";
+
+  function handleLogout() {
+    fetch("/auth/logout")
+      .then((response) => {
+        if (response.ok) {
+          // Redirect to the login page
+          window.location.href = '/app';
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Error during logout:", error);
+      });
+  }
 </script>
 
 <svelte:head>
-  <title>VidSum | Easy Notes & Video Summary</title>
-  <meta name="description" content="Summarize videos using AI. Paste a YouTube URL and get a summary in seconds." />
-  <link rel="canonical" href="https://vidsum.vercel.app/" />
+  <title>Profile | VidSum</title>
+  <meta name="description" content="View and edit your profile information." />
+  <link rel="canonical" href="https://vidsum.vercel.app/app/profile" />
   <script type="application/ld+json">
     {
       "@context": "http://schema.org",
-      "@type": "WebSite",
-      "name": "VidSum",
-      "url": "https://vidsum.vercel.app/"
+      "@type": "WebPage",
+      "name": "Profile | VidSum",
+      "url": "https://vidsum.vercel.app/app/profile"
     }
   </script>
 
-  <meta property="og:title" content="VidSum | Easy Notes & Video Summary" />
+  <meta property="og:title" content="Profile | VidSum" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://vidsum.vercel.app/ogimage.png" />
   <meta property="og:image:alt" content="VidSum - Summarize videos using AI" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:url" content="https://vidsum.vercel.app/" />
+  <meta property="og:url" content="https://vidsum.vercel.app/app/profile" />
 
-  <meta
-    property="og:description"
-    content="Summarize videos using AI. Paste a YouTube URL and get a summary in seconds." />
+  <meta property="og:description" content="View and edit your profile information." />
 </svelte:head>
 
 <div
@@ -36,16 +50,22 @@
     <p class="text-lg text-slate-600 dark:text-slate-400">Paste a YouTube link, get a summary!</p>
   </header>
 
-<section class="flex flex-col items-center gap-6 py-6">
+  <section class="flex flex-col items-center gap-6 py-6">
     <div class="max-w-3xl text-center space-y-4">
-        <p class="text-xl text-slate-700 dark:text-slate-200">
-            VidSum lets you quickly summarize YouTube videos into easy-to-read notes using AI. Just paste a video link and get concise, actionable summaries in seconds.
-        </p>
-        <p class="text-base text-slate-600 dark:text-slate-400">
+      <p class="text-xl text-slate-700 dark:text-slate-200">
+        View and edit your profile information. You can update your email, password, and other details here.
+      </p>
+      <!-- <p class="text-base text-slate-600 dark:text-slate-400">
             Save your summaries, organize your notes, and boost your learning efficiency. Try it now — no signup required!
-        </p>
+        </p> -->
+      <button
+        class="inline-flex cursor-pointer items-center px-6 py-3 rounded-lg bg-red-500 text-white font-semibold shadow hover:bg-red-600 transition"
+        on:click={handleLogout}>
+        <Icon icon="mdi:logout" class="mr-2" />
+        Log Out
+      </button>
     </div>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center mt-4">
+    <!-- <div class="flex flex-col sm:flex-row gap-4 justify-center mt-4">
         <a href="/app" class="inline-flex items-center px-6 py-3 rounded-lg bg-sky-500 text-white font-semibold shadow hover:bg-sky-600 transition">
             Go to App
             <Icon icon="mdi:arrow-right" class="ml-2" />
@@ -54,8 +74,8 @@
             Login
             <Icon icon="mdi:login" class="ml-2" />
         </a>
-    </div>
-</section>
+    </div> -->
+  </section>
 </div>
 <footer class="my-8 text-center text-sm text-slate-500 dark:text-slate-400">
   <p>© {new Date().getFullYear()} VidSum by Jamal Haneef. Keep innovating!</p>

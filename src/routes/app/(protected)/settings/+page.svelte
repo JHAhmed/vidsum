@@ -24,7 +24,7 @@
 	<div class="">
 		<label
 			for="api-key-input"
-			class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">API Key</label
+			class="mb-1.5 block text-xs md:text-sm font-medium text-gray-700 dark:text-gray-300">API Key</label
 		>
 		<input
 			id="api-key-input"
@@ -37,7 +37,7 @@
 	<div class="">
 		<label
 			for="model-input"
-			class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">Model Name</label
+			class="mb-1.5 block text-xs md:text-sm font-medium text-gray-700 dark:text-gray-300">Model Name</label
 		>
 		<input
 			id="model-input"

@@ -2,7 +2,8 @@ import { supabase } from '$lib/supabaseClient';
 import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
 
-export async function load({ params }) {
+export async function load({ params, locals: { supabase } }) {
+	const { data: { user } } = await supabase.auth.getUser();
 	const id = params.slug.split('/').pop();
 
 	try {
@@ -10,6 +11,7 @@ export async function load({ params }) {
 			.from('notes')
 			.select()
 			.eq('id', id)
+			.eq('user_id', user.id)
 			.single();
 
 		if (supabaseError) {

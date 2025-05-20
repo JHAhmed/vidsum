@@ -1,7 +1,8 @@
 import { supabase } from '$lib/supabaseClient';
 import { json } from '@sveltejs/kit';
 
-export async function POST({ request }) {
+export async function POST({ request, locals: { supabase } }) {
+	const { data: { user } } = await supabase.auth.getUser()
 	let { id } = await request.json();
 
 	try {
@@ -9,6 +10,7 @@ export async function POST({ request }) {
 		const { data: supabaseResult, error: supabaseError } = await supabase
 			.from('notes')
 			.delete()
+			.eq('user_id', user.id)
 			.eq('id', id);
 
 		if (supabaseError) {

@@ -2,10 +2,13 @@ import { supabase } from '$lib/supabaseClient';
 import { env } from '$env/dynamic/private';
 import { json } from '@sveltejs/kit';
 
-export async function GET({ request }) {
+export async function GET({ request, locals: { supabase } }) {
+
+
 	try {
-		console.log('Getting data from Supabase...');
-		const { data: supabaseResult, error: supabaseError } = await supabase.from('notes').select();
+
+		const { data: { user } } = await supabase.auth.getUser()
+		const { data: supabaseResult, error: supabaseError } = await supabase.from('notes').select().eq('user_id', user.id);
 
 		if (supabaseError) {
 			console.error('Supabase insert error:', supabaseError);
