@@ -112,7 +112,7 @@
 
 
 <form
-	class="mx-auto mt-10 max-w-md space-y-8 rounded-xl bg-white/80 p-8 shadow-lg backdrop-blur-lg border border-gray-200 dark:bg-slate-800/90 dark:border-slate-700"
+	class="mx-auto mt-10 max-w-lg space-y-8 rounded-xl bg-white/80 p-4 py-8 md:p-8 shadow-lg backdrop-blur-lg border border-gray-200 dark:bg-slate-800/90 dark:border-slate-700"
 	method="POST"
 	action="?/login"
 >

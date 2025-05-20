@@ -1,4 +1,3 @@
-import { supabase } from '$lib/supabaseClient';
 import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
 
@@ -9,7 +8,7 @@ export async function load({ params, locals: { supabase } }) {
 	try {
 		const { data: supabaseResult, error: supabaseError } = await supabase
 			.from('notes')
-			.select()
+			.select('id, title, content')
 			.eq('id', id)
 			.eq('user_id', user.id)
 			.single();
