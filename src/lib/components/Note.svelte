@@ -1,5 +1,4 @@
 <script>
-	import { animateIn } from '$lib';
 	import Icon from '@iconify/svelte';
 
 	function truncateString(str, maxLength = 120) {
@@ -9,12 +8,10 @@
 		return str;
 	}
 
-	let { note, i } = $props();
+	let { note } = $props();
 </script>
 
 <div
-	animate-in
-	use:animateIn={{ delay: i * 0.2, blur: 4, rotate: 0.4, scale: 0.96, duration: 0.5 }}
 	class="relative flex flex-col items-stretch gap-2 rounded-xl border border-gray-800 bg-gray-200 p-4 md:border-none md:p-6 lg:p-8 dark:bg-gray-900"
 >
 	<!-- <p class="w-fit text-xs font-normal tracking-widest text-gray-500">

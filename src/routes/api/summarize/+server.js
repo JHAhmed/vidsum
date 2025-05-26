@@ -136,14 +136,13 @@ export async function POST({ request, fetch, locals: { supabase } }) {
 				- Be objective and focus on the most important information from the video
 				- Include specific details that are central to understanding the content
 				- Don't refer to the video as "this video" or "the video" or "the transcript", just talk about it as if you are the one explaining it
-				- IMPORTANT: For mathematical content, ensure ALL variables, equations, and mathematical symbols are properly wrapped in LaTeX delimiters. Never use plain text for mathematical notation
-				- VERY IMPORTANT: If you are starting a LaTeX expression within brackets, make sure you leave a space between the brackets and the LaTeX expression, like this: \`( $x$ )\`, instead of \`($x$)\` to ensure proper rendering
+				- IMPORTANT: For mathematical content, ensure ALL variables, equations, and mathematical symbols are properly wrapped in LaTeX delimiters, like \`$x$\`. Never use plain text for mathematical notation
 				- ONLY GIVE THE SUMMARY, DO NOT INCLUDE ANY OTHER TEXT, don't say "Here is the summary" or anything like that.
 
 			Here is the transcript:
 			${captions}`;
 
-		const model = isOpenAI ? (user ? 'o4-mini' : 'gpt-4.1-nano') : 'gemini-2.0-flash-lite';
+		const model = isOpenAI ? (user ? 'gpt-4.1-mini' : 'gpt-4.1-nano') : 'gemini-2.0-flash-lite';
 		console.log(`Using model: ${model}`);
 		const response = await openai.chat.completions.create({
 			// model: "gemini-2.5-flash-preview-05-20",

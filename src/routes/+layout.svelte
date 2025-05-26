@@ -101,7 +101,7 @@
 	<div
 		class="{isDark
 			? 'dark'
-			: ''} z-20 flex min-h-screen flex-col items-center justify-center bg-gray-100 px-2 sm:px-4 md:px-8 lg:px-12 dark:bg-gray-950"
+			: ''} z-20 min-h-screen bg-gray-100 px-2 sm:px-4 md:px-12 dark:bg-gray-950"
 	>
 		<div class="py-12">
 			{#key $page.url.pathname}
@@ -112,20 +112,3 @@
 		{@render children()}
 	</div>
 </div>
-
-<style>
-	/* Custom styles for KaTeX in dark mode */
-	:global(.dark .katex) {
-		color: rgb(243 244 246); /* text-gray-100 */
-	}
-
-	/* Ensure math expressions don't break layout */
-	:global(.katex-display) {
-		margin: 1em 0;
-		text-align: center;
-	}
-
-	:global(.katex) {
-		font-size: 1em;
-	}
-</style>
