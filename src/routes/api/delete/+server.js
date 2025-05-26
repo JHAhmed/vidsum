@@ -6,7 +6,6 @@ export async function POST({ request, locals: { supabase } }) {
 	let { id } = await request.json();
 
 	try {
-		console.log('Deleting data from Supabase...');
 		const { data: supabaseResult, error: supabaseError } = await supabase
 			.from('notes')
 			.delete()

@@ -7,6 +7,7 @@
 	import Icon from '@iconify/svelte';
 	import { animateIn } from '$lib';
 	import { shared } from '$lib/state.svelte';
+	import markedKatex from 'marked-katex-extension';
 
 	let title = $state('');
 	let youtubeUrl = $state('');
@@ -21,6 +22,22 @@
 
 	let isLoading = $state(false);
 	let errorMessage = $state('');
+
+	let examplePoints = $state(
+		[
+		'Highlight important points',
+		'Use LaTeX and/or code formatting where necessary to explain concepts',
+		'Stick to the concepts mentioned'
+	]
+	);
+
+	marked.use(
+		markedKatex({
+			throwOnError: false,
+			displayMode: false,
+			output: 'html'
+		})
+	);
 
 	function handleKeydown(event) {
 		if (event.key === 'Enter' || event.keyCode === 13) {
@@ -199,6 +216,26 @@
 			</div>
 		</div>
 
+		<!-- highlight important points  -->
+		<!-- use LaTeX and/or code formatting where necessary to explain concepts  -->
+		<!-- stick to the concepts mentioned  -->
+
+		<div class="mt-2 flex flex-wrap items-center gap-2">
+			{#each examplePoints as point, i}
+				<button
+					type="button"
+					onclick={() => {
+						pointsList = [...pointsList, point];
+						examplePoints.splice(i, 1);
+						// examplePoints = examplePoints.filter((_, index) => index !== i); // Remove the point from examplePoints
+					}}
+					class="rounded-full cursor-pointer bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 dark:bg-slate-800 dark:text-slate-300"
+				>
+					{point}
+				</button>
+			{/each}
+		</div>
+
 		<Input
 			bind:value={point}
 			label="Points To Include"
@@ -259,7 +296,7 @@
 	{/if}
 
 	{#if summary && !isLoading}
-		<section class="my-4 space-y-4">
+		<section class="my-4 space-y-6">
 			<div class="rounded-lg bg-gray-50 p-4 shadow sm:p-6 dark:bg-slate-800/50">
 				<h2 class="mb-3 text-2xl font-semibold text-gray-900 dark:text-gray-100">
 					{title || 'Summary'}

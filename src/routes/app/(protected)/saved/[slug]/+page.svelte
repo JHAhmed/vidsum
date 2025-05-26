@@ -2,11 +2,34 @@
 	import { onMount } from 'svelte';
 	import { animateIn } from '$lib';
 	import { marked } from 'marked';
-	import Icon from '@iconify/svelte';
+	import katex from 'katex';
+	import markedKatex from 'marked-katex-extension'; // Import the extension
+	import 'katex/dist/katex.min.css'; // Import KaTeX CSS
 	import { goto } from '$app/navigation';
 	import { AlertDialog } from 'bits-ui';
+	import Icon from '@iconify/svelte';
+	import { Toaster, toast } from 'svelte-sonner';
 
 	let { data } = $props();
+
+	// Configure marked with KaTeX extension
+	marked.use(
+		markedKatex({
+			throwOnError: false,
+			displayMode: false,
+			output: 'html'
+		})
+	);
+
+	async function copySummary() {
+		try {
+			await navigator.clipboard.writeText(data.content);
+			toast.success('Summary copied to clipboard!');
+		} catch (err) {
+			console.error('Error copying summary:', err);
+			toast.error('Failed to copy summary. Check the console.');
+		}
+	}
 
 	async function handleDelete() {
 		try {
@@ -28,7 +51,11 @@
 	}
 </script>
 
-<article class="container mx-auto max-w-6xl px-6 py-8">
+<svelte:head></svelte:head>
+
+<Toaster richColors closeButton />
+
+<article class="container mx-auto max-w-5xl px-6 py-8">
 	<header animate-in use:animateIn={{ blur: 2, y: 5, delay: 0.4 }} class="section mb-8">
 		<div class="flex items-center justify-between">
 			<h1
@@ -37,11 +64,14 @@
 				{data.title}
 			</h1>
 
-			<!-- <button
-        onclick={handleDelete}
-        class="flex items-center justify-center cursor-pointer p-2 px-3 rounded-lg bg-gray-200 text-black hover:bg-red-400 dark:bg-gray-800 dark:hover:bg-red-400 dark:text-white">
-        <Icon icon="heroicons:trash" />
-      </button> -->
+			<div class="grow"></div>
+
+			<button
+			onclick={copySummary}
+				class="mr-2 flex cursor-pointer items-center justify-center rounded-lg bg-gray-200 p-2 px-3 text-black hover:bg-green-300 dark:bg-gray-800 dark:text-white dark:hover:bg-green-300"
+			>
+				<Icon icon="heroicons:clipboard" />
+			</button>
 
 			<AlertDialog.Root>
 				<AlertDialog.Trigger
@@ -51,10 +81,11 @@
 				</AlertDialog.Trigger>
 				<AlertDialog.Portal>
 					<AlertDialog.Overlay class="fixed inset-0 z-50 bg-black/50 " />
+
 					<AlertDialog.Content
 						preventScroll={false}
 						interactOutsideBehavior="close"
-						class="fixed top-1/2 left-1/2 z-50 w-full max-w-md translate-x-[-50%] translate-y-[-50%] rounded-xl bg-gray-100 p-6 shadow-lg dark:bg-slate-800 "
+						class="fixed top-1/2 left-1/2 z-50 w-full max-w-md translate-x-[-50%] translate-y-[-50%] rounded-xl bg-gray-100 p-6  shadow-lg  dark:bg-slate-800"
 					>
 						<AlertDialog.Title class="text-lg font-semibold text-gray-900 dark:text-gray-100">
 							Do you really want to delete?
@@ -79,30 +110,13 @@
 				</AlertDialog.Portal>
 			</AlertDialog.Root>
 		</div>
-
-		<!-- <p class="text-md text-gray-800 lg:text-lg dark:text-gray-400">
-			<span class="text-black dark:text-white">Jamal Haneef</span> <span class="mx-2">•</span>
-			{post.date}
-		</p> -->
 	</header>
 
 	<div
 		animate-in
 		use:animateIn={{ blur: 2, y: 5, delay: 0.6 }}
-		class=" prose lg:prose-lg dark:prose-invert max-w-none"
+		class="prose lg:prose-lg dark:prose-invert max-w-none"
 	>
 		{@html marked.parse(data.content)}
 	</div>
-
-	<!-- <button
-		onclick={handleDelete}
-		animate-in
-		use:animateIn={{ delay: 0.1, blur: 2, delay: 0.8 }}
-		class="my-4  flex items-center justify-center cursor-pointer p-2 px-3 rounded-xl bg-red-400 text-black hover:bg-red-500 dark:text-white"
-	>
-	Delete
-		<span class="flex size-5 items-center justify-center md:size-6">
-			<Icon icon="heroicons:trash" />
-		</span>
-	</button> -->
 </article>
