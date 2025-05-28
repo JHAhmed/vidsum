@@ -26,7 +26,7 @@
 	let editableContent = $state('');
 
 	const carta = new Carta({
-		// theme: 'github-dark'
+		// theme: 'github-light'
 	});
 
 	async function processMarkdownContent(markdownString) {
@@ -45,9 +45,6 @@
 			processMarkdownContent(editableData.content).then((html) => {
 				processedContent = html;
 			});
-			// If not editing, ensure editableContent is also in sync (or clear it)
-			// This primarily matters if editableData.content could change externally while editing.
-			// For simplicity, we load it into editableContent only when starting to edit.
 		} else {
 			processedContent = '';
 		}
@@ -64,7 +61,6 @@
 
 		try {
 			const response = await fetch('/api/update', {
-				// You'll need to create this API endpoint
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ id: editableData.id, content: editableContent })
@@ -73,7 +69,7 @@
 				const errorData = await response.json();
 				throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
 			}
-			await response.json(); // Or handle success response
+			await response.json(); 
 			toast.success('Content saved successfully!');
 		} catch (err) {
 			console.error('Error saving content:', err);
@@ -83,7 +79,6 @@
 
 	function handleCancelEdit() {
 		isEditing = false;
-		// editableContent will be reset the next time handleEdit is called
 	}
 
 	async function copySummary() {
@@ -117,6 +112,15 @@
 </script>
 
 <Toaster richColors closeButton />
+
+<svelte:head>
+	<title>{editableData.title} | VidSum</title>
+	<meta name="description" content="View and edit your saved summary." />
+	<meta property="og:title" content={editableData.title} />
+	<meta property="og:description" content="View and edit your saved summary." />
+	<meta property="og:type" content="article" />
+	<!-- <meta property="og:image" content="/images/summary.png" /> -->
+</svelte:head>
 
 <article class="container mx-auto max-w-5xl px-6 py-8 mt-16">
 	<header animate-in use:animateIn={{ blur: 2, y: 5, delay: 0.4 }} class="section mb-8">
@@ -193,7 +197,7 @@
 				disableToolbar={true}
 				{carta}
 				bind:value={editableContent}
-				class="rounded-xl border border-gray-300 p-2 dark:border-gray-700 dark:bg-gray-800"
+				class="rounded-xl border  border-gray-300 p-2 dark:border-gray-700 dark:bg-gray-800"
 			/>
 		</div>
 		<div class="flex justify-end gap-2">
@@ -220,3 +224,6 @@
 		</div>
 	{/if}
 </article>
+
+
+

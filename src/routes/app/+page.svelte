@@ -9,12 +9,12 @@
 
 	import MarkdownIt from 'markdown-it';
 	import mdKatex from '@iktakahiro/markdown-it-katex';
-	
+
 	const md = new MarkdownIt({
 		html: true, // Allow HTML tags in source
 		linkify: true, // Autoconvert URL-like text to links
 		typographer: true // Enable smartquotes, etc.
-	}).use(mdKatex) // Use KaTeX for math
+	}).use(mdKatex); // Use KaTeX for math
 
 	let title = $state('');
 	let youtubeUrl = $state('');
@@ -30,13 +30,13 @@
 	let isLoading = $state(false);
 	let errorMessage = $state('');
 
-	let examplePoints = $state(
-		[
+	let examplePoints = $state([
 		'Highlight important points',
-		'Use LaTeX and/or code formatting where necessary to explain concepts',
-		'Stick to the concepts mentioned'
-	]
-	);
+		'Use LaTeX formatting to explain concepts',
+		'Stick to the concepts mentioned',
+		'Simplify the concepts a bit',
+		'Use examples to help me understand it better',
+	]);
 
 	function handleKeydown(event) {
 		if (event.key === 'Enter' || event.keyCode === 13) {
@@ -185,7 +185,7 @@
 				label="YouTube Video URL"
 				placeholder="e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 			/>
-	
+
 			<div
 				class="my-6 flex w-full flex-col space-y-4 sm:flex-row sm:space-x-2 md:space-y-0 md:space-x-4"
 			>
@@ -201,7 +201,7 @@
 						}}
 					/>
 				</div>
-	
+
 				<div class="w-full">
 					<Tabs
 						onValueChange={(newValue) => (summaryType = newValue)}
@@ -215,8 +215,8 @@
 					/>
 				</div>
 			</div>
-	
-			<div class="mt-2 md:flex flex-wrap items-center gap-2 hidden">
+
+			<div class="mt-2 hidden flex-wrap items-center gap-2 md:flex">
 				{#each examplePoints as point, i}
 					<button
 						type="button"
@@ -224,13 +224,13 @@
 							pointsList = [...pointsList, point];
 							examplePoints.splice(i, 1);
 						}}
-						class="rounded-full cursor-pointer bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 dark:bg-slate-800 dark:text-slate-300"
+						class="cursor-pointer rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 dark:bg-slate-800 dark:text-slate-300"
 					>
 						{point}
 					</button>
 				{/each}
 			</div>
-	
+
 			<Input
 				bind:value={point}
 				label="Points To Include"
@@ -239,7 +239,7 @@
 				required={false}
 				placeholder="e.g., jdk, javac, (or) custom instructions"
 			/>
-	
+
 			{#if pointsList.length > 0}
 				<div class="mt-2 flex flex-wrap items-center gap-2">
 					{#each pointsList as point, i}
@@ -258,7 +258,7 @@
 					{/each}
 				</div>
 			{/if}
-	
+
 			<Input
 				bind:value={title}
 				label="Note Title"
@@ -266,7 +266,7 @@
 				autocomplete="on"
 				type="text"
 			/>
-	
+
 			<button
 				type="submit"
 				disabled={isLoading}
@@ -280,7 +280,7 @@
 				{/if}
 			</button>
 		</form>
-	
+
 		{#if errorMessage}
 			<div
 				class="mt-6 rounded-lg border border-red-600 bg-red-500/10 p-4 text-sm text-red-700 dark:border-red-500 dark:bg-red-900/30 dark:text-red-300"
@@ -289,7 +289,7 @@
 				<p>{@html errorMessage}</p>
 			</div>
 		{/if}
-	
+
 		{#if summary && !isLoading}
 			<section class="my-4 space-y-6">
 				<div class="rounded-lg bg-gray-50 p-4 shadow sm:p-6 dark:bg-slate-800/50">
@@ -302,7 +302,7 @@
 						{@html md.render(summary)}
 					</div>
 				</div>
-	
+
 				{#if shared.isLoggedIn}
 					<button
 						onclick={saveSummary}
@@ -324,6 +324,6 @@
 		{/if}
 	</div>
 </div>
-<footer class="my-8 text-center text-sm text-slate-500 dark:text-slate-400">
+<footer class="py-8 text-center text-sm text-slate-500 dark:text-slate-400">
 	<p>© {new Date().getFullYear()} VidSum by Jamal Haneef. Keep innovating!</p>
 </footer>
