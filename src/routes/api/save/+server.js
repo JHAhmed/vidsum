@@ -1,17 +1,14 @@
-// import { supabase } from '$lib/supabaseClient';
+import { supabase } from '$lib/supabaseClient';
 import { json } from '@sveltejs/kit';
 
-export async function POST({ request, locals: { supabase } }) {
+export async function POST({ request }) {
 	let { title, content, url, transcript } = await request.json();
 
 	try {
-		const { data: { user } } = await supabase.auth.getUser()
-
 		const { data: supabaseResult, error: supabaseError } = await supabase
-			.from('notes')
-			.insert([{ title: title, content: content, user_id: user.id, url: url, transcript: transcript }])
+			.from('notes_personal')
+			.insert([{ title: title, content: content, url: url, transcript: transcript }])
 			.select()
-			.eq('user_id', user.id)
 			.single();
 
 		if (supabaseError) {

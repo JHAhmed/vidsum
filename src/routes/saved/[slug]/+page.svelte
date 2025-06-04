@@ -103,7 +103,7 @@
 				throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
 			}
 			await response.json();
-			goto('/app/saved');
+			goto('/saved');
 		} catch (err) {
 			console.error('Error deleting summary:', err);
 			toast.error(err.message || 'Failed to delete summary.');
@@ -125,6 +125,9 @@
 <article class="container mx-auto max-w-5xl px-6 py-8 mt-16">
 	<header animate-in use:animateIn={{ blur: 2, y: 5, delay: 0.4 }} class="section mb-8">
 		<div class="flex items-center justify-between">
+
+			<!-- Convert to <input/> and add ondblclick to edit, use <input/> from birthday project -->
+
 			<h1
 				class="mb-6 text-3xl leading-tight tracking-tighter text-gray-900 md:text-4xl lg:text-5xl dark:text-white"
 			>

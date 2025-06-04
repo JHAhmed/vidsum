@@ -4,39 +4,20 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import { invalidate } from '$app/navigation';
-
-	import { shared } from '$lib/state.svelte';
 
 	let { data, children } = $props();
-	let { session, supabase } = $derived(data);
-
-	shared.isLoggedIn = data.user;
-
 	let isDark = $state(false);
 
-	// Initialize from localStorage and system preferences
 	onMount(() => {
 		if (browser) {
-			// Check localStorage first
 			if (localStorage.getItem('theme') === 'dark') {
 				isDark = true;
 			} else if (!localStorage.getItem('theme')) {
-				// If no preference is saved, check system preference
 				isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 			}
 		}
-
-		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
-			if (newSession?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth');
-			}
-		});
-
-		return () => data.subscription.unsubscribe();
 	});
 
-	// Function to toggle dark mode
 	function toggleDarkMode() {
 		isDark = !isDark;
 		if (browser) {
@@ -59,10 +40,7 @@
 		content="Summarize videos using AI. Paste a YouTube URL and get a summary in seconds."
 	/>
 	<meta property="og:type" content="website" />
-	<!-- <meta property="og:image" content="https://vidsum-one.vercel.app/ogimage.png" /> -->
-	<!-- <meta property="og:url" content="https://vidsum-one.vercel.app" /> -->
-
-	<!-- <link rel="canonical" href="https://vidsum-one.vercel.app" /> -->
+	
 	<link
 		rel="stylesheet"
 		href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
@@ -79,22 +57,6 @@
 	</filter>
 </svg>
 
-<!-- <div
-	class="{isDark
-		? 'dark'
-		: ''} flex min-h-screen flex-col items-center justify-center bg-gray-100 dark:bg-gray-950"
->
-	<div class="py-12">
-		{#key $page.url.pathname}
-			<Navbar
-				{isDark}
-				onToggle={toggleDarkMode}
-			/>
-		{/key}
-	</div>
-	{@render children()}
-</div> -->
-
 <div class="relative min-h-screen bg-gray-100 dark:bg-gray-950">
 	<div class="absolute inset-0 z-0" style="filter: url(#noise); opacity: 0.1;"></div>
 
@@ -105,7 +67,6 @@
 	>
 		<div class="py-12">
 			{#key $page.url.pathname}
-				<!-- <Navbar {isDark} onToggle={toggleDarkMode} {isLoggedIn} /> -->
 				<Navbar {isDark} onToggle={toggleDarkMode} />
 			{/key}
 		</div>

@@ -5,7 +5,6 @@
 	import { goto } from '$app/navigation';
 	import Icon from '@iconify/svelte';
 	import { animateIn } from '$lib';
-	import { shared } from '$lib/state.svelte';
 
 	import MarkdownIt from 'markdown-it';
 	import mdKatex from '@iktakahiro/markdown-it-katex';
@@ -16,8 +15,8 @@
 		typographer: true // Enable smartquotes, etc.
 	}).use(mdKatex); // Use KaTeX for math
 
-	let title = $state('');
-	let youtubeUrl = $state('');
+	let title = $state('Some Title');
+	let youtubeUrl = $state('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
 	let point = $state('');
 	let pointsList = $state([]);
 	let numSegments = $state(2);
@@ -35,8 +34,18 @@
 		'Use LaTeX formatting to explain concepts',
 		'Stick to the concepts mentioned',
 		'Simplify the concepts a bit',
-		'Use examples to help me understand it better',
+		'Use examples to help me understand it better'
 	]);
+
+	async function testing() {
+		const response = await fetch('/api/get-info', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				url: youtubeUrl,
+			})
+		});
+	}
 
 	function handleKeydown(event) {
 		if (event.key === 'Enter' || event.keyCode === 13) {
@@ -124,7 +133,7 @@
 				toast('Summary saved successfully!', {
 					action: {
 						label: 'View',
-						onClick: () => goto(`/app/saved/${data.supabaseResult.id}`)
+						onClick: () => goto(`/saved/${data.supabaseResult.id}`)
 					}
 				});
 			} else {
@@ -179,7 +188,7 @@
 			<h1 class="mb-2 text-4xl font-bold text-gray-900 sm:text-5xl dark:text-gray-50">VidSum</h1>
 			<p class="text-lg text-slate-600 dark:text-slate-400">Paste a YouTube link, get a summary!</p>
 		</header>
-		<form onsubmit={handleSubmit} class="space-y-6">
+		<form onsubmit={testing} class="space-y-6">
 			<Input
 				bind:value={youtubeUrl}
 				label="YouTube Video URL"
@@ -303,27 +312,18 @@
 					</div>
 				</div>
 
-				{#if shared.isLoggedIn}
-					<button
-						onclick={saveSummary}
-						type="button"
-						class="flex w-full transform cursor-pointer items-center justify-center space-x-2 rounded-lg bg-green-500 px-6 py-3.5 text-base font-semibold text-white shadow-md transition-all duration-200 ease-in-out hover:bg-green-600 hover:shadow-lg focus:ring-4 focus:ring-green-500/50 focus:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
-					>
-						<Icon icon="ph:floppy-disk-duotone" class="mr-2 h-5 w-5" /> Save Summary
-					</button>
-				{:else}
-					<a
-						href="/auth/"
-						type="button"
-						class="flex w-full transform cursor-pointer items-center justify-center space-x-2 rounded-lg bg-green-500 px-6 py-3.5 text-base font-semibold text-white shadow-md transition-all duration-200 ease-in-out hover:bg-green-600 hover:shadow-lg focus:ring-4 focus:ring-green-500/50 focus:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
-					>
-						<Icon icon="ph:floppy-disk-duotone" class="mr-2 h-5 w-5" /> Log In to Save
-					</a>
-				{/if}
+				<button
+					onclick={saveSummary}
+					type="button"
+					class="flex w-full transform cursor-pointer items-center justify-center space-x-2 rounded-lg bg-green-500 px-6 py-3.5 text-base font-semibold text-white shadow-md transition-all duration-200 ease-in-out hover:bg-green-600 hover:shadow-lg focus:ring-4 focus:ring-green-500/50 focus:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+				>
+					<Icon icon="ph:floppy-disk-duotone" class="mr-2 h-5 w-5" /> Save Summary
+				</button>
 			</section>
 		{/if}
 	</div>
 </div>
+
 <footer class="py-8 text-center text-sm text-slate-500 dark:text-slate-400">
 	<p>© {new Date().getFullYear()} VidSum by Jamal Haneef. Keep innovating!</p>
 </footer>

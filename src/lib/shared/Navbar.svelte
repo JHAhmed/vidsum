@@ -12,24 +12,21 @@
   let { isDark, onToggle } = $props();
 
   let links = $derived([
-    { name: "Home", href: `${isLoggedIn ? "/app" : "/"}`, icon: "heroicons:home" },
-    { name: "Saved", href: "/app/saved", icon: "heroicons:document-duplicate" },
-    { name: "Settings", href: "/app/settings", icon: "heroicons:cog-6-tooth" },
-    { name: "Profile", href: "/app/profile", icon: "heroicons:user", },
+    { name: "Home", href: `${isLoggedIn ? "/" : "/"}`, icon: "heroicons:home" },
+    { name: "Saved", href: "/saved", icon: "heroicons:document-duplicate" },
+    { name: "Settings", href: "/settings", icon: "heroicons:cog-6-tooth" },
   ]);
 
   let selected = $derived(links.findIndex((link) => link.href === $page.url.pathname));
   const segments = $page.url.pathname.split("/").filter((segment) => segment !== "").length;
   const prevPage = $page.url.pathname.split("/").slice(0, -1).join("/");
 
-  // const basePage = $page.url.pathname.split('/').slice(0, -1).join('/');
-  // console.log(selected);
 </script>
 
 <nav class="fixed inset-x-0 top-8 z-10 mx-auto w-fit rounded-xl backdrop-blur-md">
   <div
     class="mx-auto flex w-fit items-center justify-center rounded-xl p-1 shadow-lg dark:bg-white/20 dark:shadow-gray-800/20">
-    {#if segments > 2}
+    {#if segments > 1}
       <Tooltip.Provider>
         <Tooltip.Root delayDuration={200}>
           <Tooltip.Trigger>

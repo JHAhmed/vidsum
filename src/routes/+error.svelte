@@ -14,7 +14,7 @@
 		<div class="cta mt-4" animate-in use:animateIn={{ y:20, duration: 0.8, delay: 0.5, blur: 4 }}>
 			<a
 				href="/"
-				class="inline-block rounded-full border border-gray-800 dark:border-gray-200 bg-gray-800 dark:bg-gray-100 px-8 py-3 text-white dark:text-gray-900 no-underline transition-all duration-300 ease-in-out hover:bg-transparent hover:text-gray-800 dark:hover:text-gray-100 hover:border-gray-800 dark:hover:border-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800"
+				class="inline-block rounded-full border border-gray-800 dark:border-gray-200 bg-gray-800 dark:bg-gray-100 px-8 py-3 text-white dark:text-gray-900 no-underline transition-all duration-300 ease-in-out hover:text-gray-800 dark:hover:text-gray-100 hover:border-gray-800 dark:hover:border-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800"
 			>
 				Home
 			</a>

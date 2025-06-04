@@ -1,24 +1,25 @@
+> [!NOTE]
+> The `main` branch is meant to be used with [vidsum-api](https://github.com/JHAhmed/vidsum-api). It WILL NOT work without the backend. All information in this README is given for the `main` branch. Refer to the `deployment` branch to use VidSum independently!
+
 # VidSum – YouTube Video Summarizer
 
-VidSum is a video/lecture summarization tool built with [SvelteKit](https://kit.svelte.dev/) that lets you quickly generate and save summaries of YouTube videos. Paste a YouTube link, choose your summary preferences, and get a concise, readable summary—perfect for note-taking, studying, or sharing insights.
+VidSum is a video/lecture summarization tool built with [SvelteKit](https://kit.svelte.dev/) and [yt-dlp](https://github.com/yt-dlp/yt-dlp) that lets you quickly generate and save summaries of YouTube videos. Paste a YouTube link, choose your summary preferences, and get a concise, readable summary—perfect for note-taking, studying, or sharing insights.
 
 ## Features
 
 - **YouTube Summarization:** Paste any YouTube URL and get an AI-generated summary.
 - **Customizable Output:** Choose summary length (Short, Medium, Long) and video type (Education, Entertainment, Others).
 - **Save Notes:** Add a title and save your summaries for later reference.
-- **Authentication Ready:** Integrates with Kinde Auth and Supabase for secure user management (extend as needed).
 - **Modern UI:** Built with TailwindCSS and Bits UI for a clean, customizable interface.
-- **Scalable Structure:** Organized for easy extension and production readiness.
 
 ## Tech Stack
 
 - [SvelteKit](https://kit.svelte.dev/)
-- [Supabase](https://supabase.com/) (backend, storage, auth)
-- [Kinde Auth](https://kinde.com/) (authentication)
+- [Supabase](https://supabase.com/) (backend, storage)
 - [TailwindCSS](https://tailwindcss.com/) (styling)
 - [Bits UI](https://bits-ui.com/) (UI components)
-- [marked](https://marked.js.org/) (Markdown rendering)
+- [markdown-it](https://github.com/markdown-it/markdown-it) (Markdown rendering)
+- [carta](https://github.com/BearToCode/carta) (Markdown editing)
 - [svelte-sonner](https://github.com/emilkowalski/svelte-sonner) (toasts/notifications)
 
 ## Getting Started
@@ -35,14 +36,17 @@ VidSum is a video/lecture summarization tool built with [SvelteKit](https://kit.
     ```
 
 3. **Configure environment variables:**
-    - Copy `.env.example` to `.env` and fill in your Supabase credentials.
+    - Copy `.env.example` to `.env` and fill in your Supabase and Gemini/OpenAI credentials.
 
-4. **Run the development server:**
+4. **Set up backend:**
+    - Ensure you have the [vidsum-api](https://github.com/JHAhmed/vidsum-api) repository cloned and running.
+
+5. **Run the development server:**
     ```bash
     pnpm run dev
     ```
 
-5. **Open your browser:**
+6. **Open your browser:**
     - Visit [http://localhost:5173](http://localhost:5173)
 
 ## Usage

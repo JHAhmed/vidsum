@@ -1,21 +1,20 @@
+import { supabase } from '$lib/supabaseClient';
 import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
 
-export async function load({ params, locals: { supabase } }) {
-	const { data: { user } } = await supabase.auth.getUser();
+export async function load({ params }) {
 	const id = params.slug.split('/').pop();
 
 	try {
 		const { data: supabaseResult, error: supabaseError } = await supabase
-			.from('notes')
+			.from('notes_personal')
 			.select('id, title, content')
 			.eq('id', id)
-			.eq('user_id', user.id)
 			.single();
 
 		if (supabaseError) {
-			console.error('Supabase insert error:', supabaseError);
-			throw new Error(`Failed to save data to database: ${supabaseError.message}`);
+			console.error('Supabase error:', supabaseError);
+			throw new Error(`Failed to fetch data from database: ${supabaseError.message}`);
 		}
 
 		return supabaseResult;

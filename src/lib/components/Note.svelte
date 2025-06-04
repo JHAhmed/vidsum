@@ -25,7 +25,7 @@
 
 	<div class="grow"></div>
 	<a
-		href="/app/saved/{note.id}"
+		href="/saved/{note.id}"
 		class="group/view inline-flex w-fit cursor-pointer items-center text-sm font-normal tracking-widest text-black uppercase dark:text-white"
 		>Read more
 		<span

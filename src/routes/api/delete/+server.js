@@ -1,15 +1,13 @@
 import { supabase } from '$lib/supabaseClient';
 import { json } from '@sveltejs/kit';
 
-export async function POST({ request, locals: { supabase } }) {
-	const { data: { user } } = await supabase.auth.getUser()
+export async function POST({ request }) {
 	let { id } = await request.json();
 
 	try {
 		const { data: supabaseResult, error: supabaseError } = await supabase
-			.from('notes')
+			.from('notes_personal')
 			.delete()
-			.eq('user_id', user.id)
 			.eq('id', id);
 
 		if (supabaseError) {
