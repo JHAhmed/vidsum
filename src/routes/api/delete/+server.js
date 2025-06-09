@@ -1,4 +1,5 @@
 import { supabase } from '$lib/supabaseClient';
+import { env } from '$env/dynamic/private';
 import { json } from '@sveltejs/kit';
 
 export async function POST({ request }) {
@@ -6,7 +7,7 @@ export async function POST({ request }) {
 
 	try {
 		const { data: supabaseResult, error: supabaseError } = await supabase
-			.from('notes_personal')
+			.from(env.SUPABASE_TABLE_NAME)
 			.delete()
 			.eq('id', id);
 

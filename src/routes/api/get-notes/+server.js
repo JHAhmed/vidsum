@@ -5,7 +5,7 @@ import { json } from '@sveltejs/kit';
 export async function GET({ request }) {
 
 	try {
-		const { data: supabaseResult, error: supabaseError } = await supabase.from('notes_personal').select('id, title, content');
+		const { data: supabaseResult, error: supabaseError } = await supabase.from(env.SUPABASE_TABLE_NAME).select('id, title, content');
 
 		if (supabaseError) {
 			console.error('Supabase insert error:', supabaseError);

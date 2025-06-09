@@ -62,4 +62,4 @@ VidSum is a video/lecture summarization tool built with [SvelteKit](https://kit.
 - **Auth:** Configure Kinde and Supabase in your `.env` file.
 - **Backend:** Extend Supabase or add new API endpoints for more features. -->
 
-Built with ❤️ using SvelteKit, Supabase, TailwindCSS, and Bits UI.
+> Built with ❤️ using SvelteKit, Supabase, TailwindCSS, and Bits UI.

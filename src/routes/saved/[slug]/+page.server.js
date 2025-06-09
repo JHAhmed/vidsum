@@ -7,7 +7,7 @@ export async function load({ params }) {
 
 	try {
 		const { data: supabaseResult, error: supabaseError } = await supabase
-			.from('notes_personal')
+			.from(env.SUPABASE_TABLE_NAME)
 			.select('id, title, content')
 			.eq('id', id)
 			.single();

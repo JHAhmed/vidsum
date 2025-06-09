@@ -2,24 +2,31 @@
 	import { Note } from '$components';
 	import { animateIn } from '$lib';
 	import Icon from '@iconify/svelte';
+	import { env } from '$env/dynamic/public';
 
 	let { data } = $props();
-	let notes = $state(data.notes.supabaseResult); 
+	let notes = $state(data.notes.supabaseResult);
 
 	let searchQuery = $state('');
 
 	let filteredNotes = $derived.by(() => {
-		if (!searchQuery) return notes; 
-		return notes.filter((note) => note.title.toLowerCase().includes(searchQuery.toLowerCase().trim()));
+		if (!searchQuery) return notes;
+		return notes.filter((note) =>
+			note.title.toLowerCase().includes(searchQuery.toLowerCase().trim())
+		);
 	});
 </script>
 
 <div class="w-full space-y-4 px-4 py-12 md:px-8 md:py-20 lg:space-y-8 lg:px-16">
-	<h1 class="text-3xl leading-tight font-medium tracking-tighter text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
+	<h1
+		class="text-3xl leading-tight font-medium tracking-tighter text-gray-900 md:text-4xl lg:text-5xl dark:text-white"
+	>
 		Saved Notes
 	</h1>
 
-	<div class="z-50 flex items-center justify-start">
+	<div
+		class="z-50 {env.PUBLIC_USE_SUPABASE == 'true' ? '' : 'hidden'} flex items-center justify-start"
+	>
 		<div class="h-full scale-95 rounded-l-lg bg-gray-200 md:scale-100 dark:bg-slate-700">
 			<Icon
 				icon="heroicons:magnifying-glass"
@@ -37,7 +44,7 @@
 		/>
 	</div>
 
-	<div class="py-10">
+	<div class="py-10 {env.PUBLIC_USE_SUPABASE == 'true' ? '' : 'hidden'}">
 		{#if filteredNotes.length > 0}
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 				{#each filteredNotes as note, i (note.id)}
@@ -53,5 +60,14 @@
 		{:else}
 			<p class="text-center text-gray-500 dark:text-gray-400">You have no saved notes yet.</p>
 		{/if}
+	</div>
+
+	<div class="py-10 {env.PUBLIC_USE_SUPABASE == 'false' ? '' : 'hidden'}">
+		<p class="text-center text-gray-500 dark:text-gray-400">
+			Saved notes are only available when using Supabase.
+		</p>
+		<p class="text-center text-gray-500 dark:text-gray-400">
+			Please enable Supabase in your environment variables.
+		</p>
 	</div>
 </div>
